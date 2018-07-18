@@ -1,0 +1,17 @@
+homebrew_installed_packages:
+  - dockutil
+  - git
+  - git-flow
+  - node
+  - openssl
+  - pkg-config
+  - rbenv
+  - ruby-build
+homebrew_taps:
+  - homebrew/cask
+homebrew_cask_apps:
+  - slack
+  - sourcetree
+  - firefox
+  - google-chrome
+  - webstorm

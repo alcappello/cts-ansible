@@ -1,0 +1,33 @@
+---
+- name: Remove all crap from Dock
+  shell: /usr/local/bin/dockutil --remove "{{ item }}"
+  ignore_errors: true
+  with_items:
+    - "{{ dockitems_to_remove }}"
+
+- name: Check if items in dock exist
+  shell: /usr/local/bin/dockutil --find "{{ item.name }}" || /usr/local/bin/dockutil --add "{{ item.path }}"
+  with_items:
+    - "{{ dockitems_to_persist }}"
+
+- name: Fix order
+  shell: /usr/local/bin/dockutil --move "{{ item.name }}" --position {{ item.pos }}
+  with_items:
+    - "{{ dockitems_to_persist }}"
+
+
+- name: Copy preferences if they don't exist
+  become: yes
+  copy:
+    src: /Users/admin/Library/Preferences/com.apple.dock.plist
+    dest: "/Users/{{ dev_username }}/Library/Preferences/com.apple.dock.plist"
+    force: no
+    owner: "{{ dev_username }}"
+    remote_src: yes
+
+
+- name: Remove Download directory details
+  xml:
+    path: "/Users/{{ dev_username }}/Library/Preferences/com.apple.dock.plist"
+    xpath: /persistent-others/*
+    state: absent

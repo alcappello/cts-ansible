@@ -1,0 +1,17 @@
+---
+- name: Update the system
+  raw: apt-get update -qq
+
+- name: Install python 2.7
+  raw: apt-get install python-minimal -qq
+
+- name: Add the user alessandro
+  user:
+    name: alessandro
+    shell: /bin/bash
+
+- name: Add local SSH keys (from local /Users/alessandro/.ssh/id_rsa.pub to remote hosts)
+  authorized_key: user=alessandro state=present key="{{ lookup('file', '/Users/alessandro/.ssh/id_rsa.pub') }}"
+
+- name: Sudo without password
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%alessandro' line='%alessandro ALL=(ALL) NOPASSWD: ALL'"
