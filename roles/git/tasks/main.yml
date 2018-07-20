@@ -8,18 +8,30 @@
   with_items:
     - "{{ git_globals }}"
 
-- name: Create a 2048-bit SSH key
+- name: Create a 4096-bit SSH key
   become: yes
   user:
     name: "{{ dev_username }}"
     generate_ssh_key: yes
-    ssh_key_bits: 2048
+    ssh_key_bits: 4096
     ssh_key_file: .ssh/id_rsa
+
+- name: Add SSH config
+  become: yes
+  copy:
+    src: config
+    dest: "/Users/{{ dev_username }}/.ssh/config"
+    owner: "{{ dev_username }}"
+
+- name: Start key-agent register key
+  become: yes
+  become_user: "{{ dev_username }}"
+  shell: eval "$(ssh-agent -s)" && ssh-add -K /Users/"{{ dev_username }}"/.ssh/id_rsa
 
 - name: Slurp SSH key
   become: yes
   slurp:
-    src: '/Users/{{ dev_username }}/.ssh/id_rsa.pub'
+    src: "/Users/{{ dev_username }}/.ssh/id_rsa.pub"
   register: id_rsa
 
 - name: Copy the SSH public key into Github
@@ -27,5 +39,17 @@
   pause:
     prompt: "\n\n********************\n{{ id_rsa['content'] | b64decode }}********************\n\nPress Enter when ready"
 
-- name:
-  
+- name: Ensure that the workspace folder is there
+  become: yes
+  file:
+    name: "/Users/{{ dev_username }}/Workspace/cygni_cts_ansible"
+    state: directory
+    owner: "{{ dev_username }}"
+
+- name: Clone the remote repo
+  become: yes
+  become_user: "{{ dev_username }}"
+  git:
+    repo: git@gitlab.com:alcappello/cygni_cts_ansible.git
+    dest: "/Users/{{ dev_username }}/Workspace/cygni_cts_ansible"
+    refspec: '+refs/pull/*:refs/heads/*'
