@@ -2,6 +2,7 @@ homebrew_installed_packages:
   - dockutil
   - git
   - git-flow
+  - libxml2
   - node
   - openssl
   - pkg-config

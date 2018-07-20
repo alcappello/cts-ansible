@@ -9,5 +9,7 @@
     ansible_ssh_pass: admin
     ansible_sudo_pass: admin
   roles:
-    - geerlingguy.homebrew
-    - dockutil
+    #- bash
+    #- geerlingguy.homebrew
+    #- dockutil
+    - git

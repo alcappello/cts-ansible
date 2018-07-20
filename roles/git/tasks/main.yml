@@ -1,0 +1,31 @@
+---
+- name: Configure git globally
+  become_user: "{{ dev_username }}"
+  git_config:
+    name: "{{ item.name }}"
+    scope: global
+    value: "{{ item.value }}"
+  with_items:
+    - "{{ git_globals }}"
+
+- name: Create a 2048-bit SSH key
+  become: yes
+  user:
+    name: "{{ dev_username }}"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+- name: Slurp SSH key
+  become: yes
+  slurp:
+    src: '/Users/{{ dev_username }}/.ssh/id_rsa.pub'
+  register: id_rsa
+
+- name: Copy the SSH public key into Github
+  become_user: "{{ dev_username }}"
+  pause:
+    prompt: "\n\n********************\n{{ id_rsa['content'] | b64decode }}********************\n\nPress Enter when ready"
+
+- name:
+  
