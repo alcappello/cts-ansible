@@ -1,0 +1,15 @@
+---
+- name: Provision new Mac computers for software development
+  hosts: developers
+  user: administrator
+
+  vars_files:
+    - vars/homebrew.yml
+  vars:
+    ansible_ssh_pass: admin
+    ansible_sudo_pass: admin
+  roles:
+    - bash
+    - geerlingguy.homebrew
+    - dockutil
+    - git

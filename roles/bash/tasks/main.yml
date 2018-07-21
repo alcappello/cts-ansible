@@ -1,0 +1,6 @@
+---
+- name: Ensure .bashrc script is present
+  copy:
+    src: .bashrc
+    dest: /Users/admin/.bashrc
+  register: bash

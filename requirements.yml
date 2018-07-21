@@ -1,0 +1,5 @@
+# Run the following:
+# ansible-galaxy install -r requirements.yml
+
+# Homebrew role from geerlingguy
+- src: geerlingguy.homebrew

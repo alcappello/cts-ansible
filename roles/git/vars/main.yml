@@ -1,0 +1,13 @@
+git_globals:
+  - name: user.name
+    value: "{{ dev_fullname }}"
+    scope: global
+  - name: user.email
+    value: "{{ dev_email }}"
+    scope: global
+  - name: core.editor
+    value: nano
+    scope: global
+  - name: core.ignorecase
+    value: false
+    scope: global
