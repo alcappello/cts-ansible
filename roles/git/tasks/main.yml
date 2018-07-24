@@ -46,6 +46,16 @@
     state: directory
     owner: "{{ dev_username }}"
 
+- name: ensure gitlab.com is a known host
+  become: yes
+  lineinfile:
+    dest: /Users/{{ dev_username }}/.ssh/known_hosts
+    create: yes
+    state: present
+    line: "{{ lookup('pipe', 'ssh-keyscan -t rsa gitlab.com') }}"
+    regexp: "^gitlab\\.com"
+
+
 - name: Clone the remote repo
   become: yes
   become_user: "{{ dev_username }}"
