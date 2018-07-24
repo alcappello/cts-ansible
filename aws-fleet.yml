@@ -1,0 +1,7 @@
+---
+- name: Provision a number of EC2 instances, deploy production code from GitHub and put them behind a Load Balancer
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - ec2
