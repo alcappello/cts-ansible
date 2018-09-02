@@ -8,10 +8,18 @@
     - nodejs
     - npm
 
+- name: Update environment variables
+  lineinfile:
+    path: /www/.env
+    line: "MACHINE_IP={{ inventory_hostname }}"
+    state: present
+    create: yes
+
 - name: Ensure that our codebase is up-to-date
   git:
     repo: https://github.com/alcappello/cts-ansible-web
     dest: /www
+    force: yes
 
 - name: Install dependencies
   npm:
