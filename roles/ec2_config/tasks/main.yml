@@ -17,10 +17,15 @@
   npm:
     path: /www
 
+- name: Install forever globally
+  npm:
+    name: forever
+    global: yes
+
 - name: Ensure that node starts at boot
   become: yes
   cron:
     name: "NodeJS"
     special_time: reboot
-    job: "sudo /usr/local/bin/forever start -c /usr/local/bin/node /www/app.js"
+    job: "forever start /www/bin/www"
   notify: reboot
