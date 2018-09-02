@@ -1,0 +1,26 @@
+---
+- name: Ensure required software is present
+  yum:
+    name: "{{ item }}"
+    enablerepo: epel
+  with_items:
+    - git
+    - nodejs
+    - npm
+
+- name: Ensure that our codebase is up-to-date
+  git:
+    repo: https://github.com/alcappello/cts-ansible-web
+    dest: /www
+
+- name: Install dependencies
+  npm:
+    path: /www
+
+- name: Ensure that node starts at boot
+  become: yes
+  cron:
+    name: "NodeJS"
+    special_time: reboot
+    job: "sudo /usr/local/bin/forever start -c /usr/local/bin/node /www/app.js"
+  notify: reboot

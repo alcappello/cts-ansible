@@ -4,5 +4,8 @@ ec2_instance_type: "t2.micro"
 ec2_image: "ami-7c4f7097"
 ec2_subnet_id: "subnet-65244a28"
 ec2_region: "eu-central-1"
-ec2_tag_Name: "Testserver"
+ec2_tag_name: "Testserver"
 ec2_volume_size: 8
+elb_name: "cygni-elb"
+
+ansible_distribution_major_version: 7

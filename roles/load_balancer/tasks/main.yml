@@ -1,0 +1,21 @@
+- name: Gather facts about all the interested EC2 instances
+  ec2_instance_facts:
+    filters:
+      "tag:Name": "{{ec2_tag_name}}"
+      "instance-state-name": "running"
+  register: ec2_all
+
+- name: Ensure the presence of the load balancer
+  ec2_elb_lb:
+    name: "{{ elb_name }}"
+    state: present
+    region: "{{ ec2_region }}"
+    instance_ids:
+      - "{{ item.instance_id }}"
+    subnets:
+      - subnet-65244a28
+    listeners:
+      - protocol: http
+        load_balancer_port: 80
+        instance_port: 80
+  with_items: "{{ ec2_all.instances }}"
