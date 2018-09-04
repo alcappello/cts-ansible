@@ -1,7 +1,53 @@
 ---
-- name: Provision a number of EC2 instances, deploy production code from GitHub and put them behind a Load Balancer
+##############################################################################
+# Play 1 - Create EC2 instances in AWS
+##############################################################################
+
+- name: Start a number of EC2 instances
   hosts: localhost
   connection: local
   gather_facts: false
+
+  vars_files:
+    - vars/aws.yml
+  vars:
+    ansible_ssh_user: ec2-user
+    ansible_ssh_private_key_file: ~/.ssh/keyone.pem
+
   roles:
-    - ec2
+    - ec2_startup
+
+##############################################################################
+# Play 1 - Configure the instances and update the codebase
+##############################################################################
+
+- name: Configure the EC2 instances
+  hosts: launched_ec2
+  become: yes
+  gather_facts: false
+
+  vars_files:
+    - vars/aws.yml
+  vars:
+    ansible_ssh_user: ec2-user
+    ansible_ssh_private_key_file: ~/.ssh/keyone.pem
+
+  roles:
+    - geerlingguy.repo-epel
+    - ec2_config
+
+
+##############################################################################
+# Play 3 - Configure the ELB and attach the EC2 instances
+##############################################################################
+
+- name: Configure ELB and attach EC2 instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - vars/aws.yml
+
+  roles:
+    - load_balancer

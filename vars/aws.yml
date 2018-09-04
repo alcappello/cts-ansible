@@ -1,0 +1,15 @@
+ec2_keypair: "key.one"
+ec2_security_group: "sg-09ab86f918f0a54d7"
+ec2_instance_type: "t2.micro"
+ec2_image: "ami-7c4f7097"
+ec2_subnet_id: "subnet-65244a28"
+ec2_region: "eu-central-1"
+ec2_tag_name: "Testserver"
+ec2_volume_size: 8
+elb_name: "cygni-elb"
+elb_group_name: "cygni-group"
+elb_extra_subnet_id: "subnet-568b1c2b"
+elb_target_vpc: "vpc-e8224683"
+elb_target_group: "web"
+
+ansible_distribution_major_version: 7

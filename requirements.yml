@@ -3,3 +3,4 @@
 
 # Homebrew role from geerlingguy
 - src: geerlingguy.homebrew
+- src: geerlingguy.repo-epel
