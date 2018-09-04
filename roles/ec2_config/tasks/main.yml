@@ -1,4 +1,9 @@
 ---
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+
 - name: Ensure required software is present
   yum:
     name: "{{ item }}"
@@ -35,5 +40,5 @@
   cron:
     name: "NodeJS"
     special_time: reboot
-    job: "forever start /www/bin/www"
+    job: "cd /www && forever start bin/www"
   notify: reboot
