@@ -10,7 +10,7 @@
     instance_tags:
       Name: "{{ec2_tag_name}}"
       foo: bar
-    exact_count: 3
+    exact_count: "{{ ec2_count }}"
     count_tag: foo
     vpc_subnet_id: "{{ ec2_subnet_id }}"
     assign_public_ip: yes
