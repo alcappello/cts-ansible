@@ -1,6 +1,6 @@
 # Ansible @ CTS
 
-This is the sample code that I prepared for the [Cygni Tech Summit](cts.cygni.se) in Stockholm (14/09/2018).
+This is the sample code that I prepared for the [Cygni Tech Summit](https://cts.cygni.se) in Stockholm (14/09/2018).
 Please feel free to clone this repo, install Ansible and play with the code. Don't forget to shut down all the EC2 instances when you're done! :)
 
 ## How to install Ansible
